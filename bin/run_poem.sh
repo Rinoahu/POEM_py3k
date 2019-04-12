@@ -75,9 +75,9 @@ then
     echo "assembly mode"
 
     if [[ $lr == "n" ]] || [[ $lr == "N" ]]; then
-        idba_ud -r $fas -o $temp/assembly --pre_correction > $temp/asm.log
+        idba_ud -r $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
     else
-        idba_ud -l $fas -o $temp/assembly --pre_correction > $temp/asm.log
+        idba_ud -l $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
     fi
     # check the header of the fasta
     awk -F" " '{if($1~/^>/){print $1}else{print $0}}' $temp/assembly/contig.fa > $temp/input.fsa
