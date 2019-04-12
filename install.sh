@@ -6,7 +6,8 @@ SCRIPTPATH=`dirname $SCRIPT`
 
 
 # install third part software and packages:
-conda install -y -c bioconda diamond prokka idba cd-hit keras networkx biopython numpy
+conda install -y -c bioconda diamond prokka=1.12 idba cd-hit keras networkx biopython numpy
+conda install -y -c biobuilds perl=5.22
 
 # download the cog2014 database.
 echo "Download COG database"
