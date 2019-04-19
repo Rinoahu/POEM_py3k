@@ -13,7 +13,7 @@ git config --global user.name Rinoahu
 git remote rm origin
 
 git add -A .
-git commit -m 'improve README'
+git commit -m 'add Prodigal support for gene prediction'
 git remote add origin https://github.com/Rinoahu/POEM_py3k
 git pull origin master
 git push origin master

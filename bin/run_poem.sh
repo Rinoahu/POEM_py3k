@@ -107,6 +107,13 @@ if [[ $gpd == "gmk" ]] || [[ $gpd == "genemark" ]]; then
     gmhmmp=gmhmmp 
     $gmhmmp -A $fasta\_gmk_aa.fsa -p 0 -f G -m $SCRIPTPATH/../config/MetaGenemark/MetaGeneMark_v1.mod $fasta
 
+
+elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
+
+    prodigal -a $fasta\_prod_aa.fsa -p meta -i $fasta -q > /dev/null
+    $python $SCRIPTPATH/../lib/prod2gmk.py $fasta\_prod_aa.fsa > $fasta\_gmk_aa.fsa
+    rm $fasta\_prod_aa.fsa
+
 elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
 
     #/usr/bin/perl /home/xiaoh/Downloads/compiler/intel/intelpython27/bin/prokka --quiet --fast --prefix prokka_out --metagenome --force --outdir $fasta\_prokka $fasta
