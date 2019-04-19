@@ -113,6 +113,7 @@ elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
     prodigal -a $fasta\_prod_aa.fsa -p meta -i $fasta -q > /dev/null
     $python $SCRIPTPATH/../lib/prod2gmk.py $fasta\_prod_aa.fsa > $fasta\_gmk_aa.fsa
     rm $fasta\_prod_aa.fsa
+    #exit 1;
 
 elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
 

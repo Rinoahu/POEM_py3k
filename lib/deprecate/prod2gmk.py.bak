@@ -3,7 +3,7 @@
 import sys
 
 if len(sys.argv[1:]) < 1:
-    print('python this.py foo.fsa')
+    print 'python this.py foo.fsa'
     raise SystemExit()
 
 qry = sys.argv[1]
@@ -16,8 +16,8 @@ for i in f:
         #print j
         k = j[0].rfind('_')
         scf, qid = j[0][:k], j[0][k+1:]
-        st, ed, strand = list(map(int, j[1:4]))
+        st, ed, strand = map(int, j[1:4])
         strand = strand == 1 and '+' or '-'
-        print('>gene_%08d'%int(qid) + '|Prodigal|' + str(ed - st + 1)  + '_nt|' + strand + '|' + str(st) + '|' + str(ed) + '\t' + scf)
+        print '>gene_%08d'%int(qid) + '|Prodigal|' + str(ed - st + 1)  + '_nt|' + strand + '|' + str(st) + '|' + str(ed) + '\t' + scf
     else:
-        print(i[:-1])
+        print i[:-1]
