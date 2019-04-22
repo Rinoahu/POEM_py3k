@@ -37,7 +37,7 @@ more information on windows subsystem linux can be found at https://docs.microso
 ```
 sudo apt update && sudo apt upgrade
 ```
-4. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). This pipeline does not support python 3 at this time.
+4. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). 
 5. Open a new terminal, create a subfolder wherever you want to store POEM, and enter the following commands
 ``` 
 $ git clone https://github.com/Rinoahu/POEM_py3k
