@@ -46,13 +46,13 @@ if [ ! $fas ]; then
 	echo '#'
 	echo '# usage:'
     echo 'for genome|assembly|contig'
-	echo '$ bash this_script.sh -f genome.fsa -a n -p prokka'
+	echo '$ bash this_script.sh -f genome.fsa -a n -p prodigal'
     echo ''
     echo 'for short reads (length <= 600)'
-	echo '$ bash this_script.sh -f reads.fsa -a y -p prokka -l n'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l n'
 
     echo 'for short reads (length > 600)'
-	echo '$ bash this_script.sh -f reads.fsa -a y -p prokka -l y'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l y'
 
 	echo '#'
 	echo '#######################################'
@@ -108,7 +108,7 @@ if [[ $gpd == "gmk" ]] || [[ $gpd == "genemark" ]]; then
     $gmhmmp -A $fasta\_gmk_aa.fsa -p 0 -f G -m $SCRIPTPATH/../config/MetaGenemark/MetaGeneMark_v1.mod $fasta
 
 
-elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
+elif [[ $gpd == "prodigal" ]] || [[ $gpd == "pro" ]]; then
 
     prodigal -a $fasta\_prod_aa.fsa -p meta -i $fasta -q > /dev/null
     $python $SCRIPTPATH/../lib/prod2gmk.py $fasta\_prod_aa.fsa > $fasta\_gmk_aa.fsa
