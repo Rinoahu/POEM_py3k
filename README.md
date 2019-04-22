@@ -1,4 +1,4 @@
-POEM is a pipeline which can predict operons and core operons from metagenomic genome/assembly or short reads. It can be run on most * NIX systems.  
+POEM is a pipeline which can predict operons and core operons from metagenomic genome/assembly or short reads. It can be run on most * NIX systems and Windows WSL.
 
 ## Requirements
 
@@ -10,53 +10,106 @@ This pipeline is available on Linux systems. Make sure that you have the followi
 
     make sure to add path of conda to $PATH environment variable
 
-## Installation
+## Linux Installation
+
+Installation is simple if Anaconda and Conda are installed. Type or paste the following commands into your terminal in whichever subfolder you want to keep POEM.
 
 ```
-$ git clone https://github.com/Rinoahu/POEM
+$ git clone https://github.com/Rinoahu/POEM_py3k
 
-$ cd ./POEM
+$ cd ./POEM_py3k
 
 $ bash ./install.sh
 ```
-The installation script calls conda to install all the necessary python packages and software. 
+The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
 PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
 
-## Example
+## Windows Installation
+
+Running this pipeline on Windows 10 requires a few more steps.
+1. Install Ubuntu (or preferred * Nix distribution). Ubuntu can be downloaded for free from the windows app store
+2. Open Windows Powershell as administrator and enter the following
+``` 
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+```
+more information on windows subsystem linux can be found at https://docs.microsoft.com/en-us/windows/wsl/install-win10. Reboot if prompted
+3. Run and initialize your Linux distribution (set password etc). Update it by entering the following if using Ubuntu, or your distribution's update commands.
+```
+sudo apt update && sudo apt upgrade
+```
+4. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). 
+5. Open a new terminal, create a subfolder wherever you want to store POEM, and enter the following commands
+``` 
+$ git clone https://github.com/Rinoahu/POEM_py3k
+
+$ cd ./POEM_py3k
+
+$ bash ./install.sh
+```
+
+The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
+PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
+
+*note: Windows WSL will not allow linux programs with GUIs to run, and the file systems are separate. Windows programs will not be able to access files in your Linux system unless you move them back to your Windows files. To connect to your existing drive use /mnt/c/User/....
+if you are using Cytoscape to visualize your networks, install Cytoscape for windows not Linux. To access the network files you will need to move them to your windows drive.*
+
+## Testing the Installation
 
 
-example directory contain a genome fasta file of _E.coli_, run  ```runme.sh``` to test the pipeline
+the example directory contains a genome fasta file of _E.coli_, run  ```runme.sh``` to test the pipeline
 ```
 $ cd ./example
 
 $ bash ./runme.sh eco.fasta
 ```
-
+This should output a network with 5 pairs of genes if you check the .sif file in Cytoscape.
 
 ## Usage
+POEM is recommended for finding operons in preassembled metagenomic data, but can also accept short or long reads, for which it uses IDBA_UD to assemble
 
+For preassembled fasta files (or genomes)
+``` 
+$ bash ./bin/run_poem.sh -f file.name -a n -p pro 
 
-For short reads:
+```
+or to use metagenemark for annotation instead of prodigal (if installed)
+```
+$ bash ./bin/run_poem.sh -f file.name -a n -p gmk
+```
+If you want to upload files to genbank you can also call Prokka to generate genbank files (this can extend runtime significantly)
+```
+$ bash ./bin/run_poem.sh -f file.name -a n -p pka
+```
+For short reads <600bp:
+```
+    $ bash ./bin/run_poem.sh -f file.name -a y -p pro -l n
+```
+file.name is single fasta file. If the reads are paired-end files in fastq or fasta format, 
+use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interleaved paired-end reads in a single file are ok 
 
-    $ bash ./bin/run_poem.sh -f reads.fsa -a y
+For long reads >600bp:
+```
+$ bash ./bin/run_poem.sh -f file.name -a y -p pro -l y
+```
+file.name is single fasta file. If the reads are paired-end files in fastq or fasta format, 
+use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interleaved paired-end reads in a single file are ok
 
-    reads.fsa is single fasta file. If the reads are paired-end files in fastq or fasta format, 
-    use the fq2fa of IDBA_UD to convert them to  a single fasta file.
+## Flags
+-f: Specifies input file name. File should be a single fasta format file, but file name is not important. 
 
-For genome/assembly:
+-a: Assembly mode. For preassembled files use n or N, for reads (single end or interleaved paired ends) us y or Y
 
-    $ bash ./bin/run_poem.sh -f genome.fsa -a n
+-p: Gene prediction method. For Prodigal use pro or prodigal, for metagenemark (if installed) use gmk or genemark. to generate genbank files with prokka use pka or prokka
 
-    genome.fsa is the genome/assembly fasta file.
-
+-l: Read length: If assembly mode is on, the IDBA_UD will default to short read mode, which can also be specified by using n. for long reads (>600bp) use y
 
 ## Output
 
 
-POEM will create a directory named read.fasta_output to save the results. The results include serveral file:
+POEM will create a directory named filename.fasta_output to save the results. The results include serveral files:
 
     1.  input.fsa:
-        The contigs or saffolds of IDBA-UD output in fasta format
+        The contigs or scaffolds of IDBA-UD output in fasta format
 
     2.  input.fsa_gmk_aa.fsa and input.fsa.gff:
         The fasta file of protein sequence and gff file generated by prediction of MetaGeneMark on input.fsa from step 1
@@ -145,7 +198,7 @@ POEM will create a directory named read.fasta_output to save the results. The re
     13. input.fsa.core_network.sif, input.fsa.core_node.tab:
         Network, node attribute and edge attribute extracted from step 11 for cytoscape visualization. Figure 1 shows an example to view the core operons by cytoscape.
 
-
+To visualize the network in Cytoscape import the network from the .sif file. To add the gene prediction annotations, import the input.fsa.core_node.tab file as a table. Change the node labels to function/passthrough mapping under style.
 ![Visualization of core operons](example/cyto.jpeg)
 *Figure 1: visualization of core operons in cytoscape*
 
