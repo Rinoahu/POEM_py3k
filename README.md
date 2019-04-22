@@ -15,14 +15,14 @@ This pipeline is available on Linux systems. Make sure that you have the followi
 Installation is simple if Anaconda and Conda are installed. Type or paste the following commands into your terminal in whichever subfolder you want to keep POEM.
 
 ```
-$ git clone https://github.com/Rinoahu/POEM
+$ git clone https://github.com/Rinoahu/POEM_py3k
 
-$ cd ./POEM
+$ cd ./POEM_py3k
 
 $ bash ./install.sh
 ```
 The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
-PS: POEM calls either Prokka or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
+PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
 
 ## Windows Installation
 
@@ -40,14 +40,14 @@ sudo apt update && sudo apt upgrade
 4. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). This pipeline does not support python 3 at this time.
 5. Open a new terminal, create a subfolder wherever you want to store POEM, and enter the following commands
 ``` 
-$ git clone https://github.com/Rinoahu/POEM
+$ git clone https://github.com/Rinoahu/POEM_py3k
 
-$ cd ./POEM
+$ cd ./POEM_py3k
 
 $ bash ./install.sh
 ```
 The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
-PS: POEM calls either Prokka or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
+PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
 
 *note: Windows WSL will not allow linux programs with GUIs to run, and the file systems are separate. Windows programs will not be able to access files in your Linux system unless you move them back to your Windows files. To connect to your existing drive use /mnt/c/User/....
 if you are using Cytoscape to visualize your networks, install Cytoscape for windows not Linux. To access the network files you will need to move them to your windows drive.*
@@ -68,24 +68,27 @@ POEM is recommended for finding operons in preassembled metagenomic data, but ca
 
 For preassembled fasta files (or genomes)
 ``` 
-$ bash ./bin/run_poem.sh -f file.name -a n -p pka 
+$ bash ./bin/run_poem.sh -f file.name -a n -p pro 
 
 ```
-or to use metagenemark for annotation instead of prokka (if installed)
+or to use metagenemark for annotation instead of prodigal (if installed)
 ```
 $ bash ./bin/run_poem.sh -f file.name -a n -p gmk
 ```
-
+If you want to upload files to genbank you can also call Prokka to generate genbank files (this can extend runtime significantly)
+```
+$ bash ./bin/run_poem.sh -f file.name -a n -p pka
+```
 For short reads <600bp:
 ```
-    $ bash ./bin/run_poem.sh -f file.name -a y -p pka -l n
+    $ bash ./bin/run_poem.sh -f file.name -a y -p pro -l n
 ```
 file.name is single fasta file. If the reads are paired-end files in fastq or fasta format, 
 use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interleaved paired-end reads in a single file are ok 
 
 For long reads >600bp:
 ```
-$ bash ./bin/run_poem.sh -f file.name -a y -p pka -l y
+$ bash ./bin/run_poem.sh -f file.name -a y -p pro -l y
 ```
 file.name is single fasta file. If the reads are paired-end files in fastq or fasta format, 
 use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interleaved paired-end reads in a single file are ok
@@ -95,7 +98,7 @@ use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interle
 
 -a: Assembly mode. For preassembled files use n or N, for reads (single end or interleaved paired ends) us y or Y
 
--p: Gene prediction method. For Prokka use pka or prokka, for metagenemark (if installed) use gmk or genemark
+-p: Gene prediction method. For Prodigal use pro or prodigal, for metagenemark (if installed) use gmk or genemark. to generate genbank files with prokka use pka or prokka
 
 -l: Read length: If assembly mode is on, the IDBA_UD will default to short read mode, which can also be specified by using n. for long reads (>600bp) use y
 
