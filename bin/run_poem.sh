@@ -46,13 +46,13 @@ if [ ! $fas ]; then
 	echo '#'
 	echo '# usage:'
     echo 'for genome|assembly|contig'
-	echo '$ bash this_script.sh -f genome.fsa -a n -p prokka'
+	echo '$ bash this_script.sh -f genome.fsa -a n -p prodigal'
     echo ''
     echo 'for short reads (length <= 600)'
-	echo '$ bash this_script.sh -f reads.fsa -a y -p prokka -l n'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l n'
 
     echo 'for short reads (length > 600)'
-	echo '$ bash this_script.sh -f reads.fsa -a y -p prokka -l y'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l y'
 
 	echo '#'
 	echo '#######################################'
@@ -75,9 +75,9 @@ then
     echo "assembly mode"
 
     if [[ $lr == "n" ]] || [[ $lr == "N" ]]; then
-        idba_ud -r $fas -o $temp/assembly --pre_correction > $temp/asm.log
+        idba_ud -r $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
     else
-        idba_ud -l $fas -o $temp/assembly --pre_correction > $temp/asm.log
+        idba_ud -l $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
     fi
     # check the header of the fasta
     awk -F" " '{if($1~/^>/){print $1}else{print $0}}' $temp/assembly/contig.fa > $temp/input.fsa
@@ -106,6 +106,14 @@ if [[ $gpd == "gmk" ]] || [[ $gpd == "genemark" ]]; then
     #gmhmmp=/home/xiaoh/Downloads/genome/evaluator/quast-3.1/libs/genemark/linux_64/gmhmmp 
     gmhmmp=gmhmmp 
     $gmhmmp -A $fasta\_gmk_aa.fsa -p 0 -f G -m $SCRIPTPATH/../config/MetaGenemark/MetaGeneMark_v1.mod $fasta
+
+
+elif [[ $gpd == "prodigal" ]] || [[ $gpd == "pro" ]]; then
+
+    prodigal -a $fasta\_prod_aa.fsa -p meta -i $fasta -q > /dev/null
+    $python $SCRIPTPATH/../lib/prod2gmk.py $fasta\_prod_aa.fsa > $fasta\_gmk_aa.fsa
+    rm $fasta\_prod_aa.fsa
+    #exit 1;
 
 elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
 
