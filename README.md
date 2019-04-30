@@ -96,38 +96,38 @@ POEM will create a directory named read.fasta_output to save the results. The re
     9.  input.fsa.adjacency and input.fsa.operon:
 		This file is the predicted operonic adjacent genes. This file contains 11 columns: col 1 is the gene 1's id; col 2 is the chromosome|scaffold id where gene 1 is located; col 3-5 are strand, start and end of gene 1; col 6 is gene 2's id; col 7 is the chromsome|scaffold id where gene 2 is located; col 8-11 are strand, start and end of gene 2. For example:
 
-			CPIBHFJP_00001|Prodigal:2.6|772_aa|+|255|857$$gi|985000614|gb|CP014225.1|       gi|985000614|gb|CP014225.1|     +       255     857     CPIBHFJP_00002|Prodigal:2.6|1014_aa|+|883|1308$$gi|985000614|gb|CP014225.1|     gi|985000614|gb|CP014225.1|     +       883     1308    False
-			CPIBHFJP_00002|Prodigal:2.6|1014_aa|+|883|1308$$gi|985000614|gb|CP014225.1|     gi|985000614|gb|CP014225.1|     +       883     1308    CPIBHFJP_00003|Prodigal:2.6|1165_aa|+|1586|1693$$gi|985000614|gb|CP014225.1|    gi|985000614|gb|CP014225.1|     +       1586    1693    False
-			...
+		CPIBHFJP_00001|Prodigal:2.6|772_aa|+|255|857$$gi|985000614|gb|CP014225.1|       gi|985000614|gb|CP014225.1|     +       255     857     CPIBHFJP_00002|Prodigal:2.6|1014_aa|+|883|1308$$gi|985000614|gb|CP014225.1|     gi|985000614|gb|CP014225.1|     +       883     1308    False
+		CPIBHFJP_00002|Prodigal:2.6|1014_aa|+|883|1308$$gi|985000614|gb|CP014225.1|     gi|985000614|gb|CP014225.1|     +       883     1308    CPIBHFJP_00003|Prodigal:2.6|1165_aa|+|1586|1693$$gi|985000614|gb|CP014225.1|    gi|985000614|gb|CP014225.1|     +       1586    1693    False
+		...
 
 
     10.  input.fsa.operon:
 		The predicted full operons. This file contains 3 columns: col 1 is the ids of operonic genes split by --> or <--, arrow stands for the strand of gene; col 2 is the COG ids of the operonic genes; col 3 is the COG annotation of the operonics genes split by --> or <--. For example:
 			
-			gene_id COG_id  annotation
-			CPIBHFJP_00007|Prodigal:2.6|2673_aa|+|3821|3946$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00008|Prodigal:2.6|2862_aa|+|3961|4182$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00009|Prodigal:2.6|3078_aa|+|4218|4484$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00010|Prodigal:2.6|3373_aa|+|4484|4867$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00011|Prodigal:2.6|3449_aa|+|4887|5078$$gi|985000614|gb|CP014225.1|        unknown-->unknown-->unknown-->COG3001-->COG3001 unknown::unknown-->unknown::unknown-->unknown::unknown-->G::Fructosamine-3-kinase::Carbohydrate transport and metabolism-->G::Fructosamine-3-kinase::Carbohydrate transport and metabolism
-			CPIBHFJP_00036|Prodigal:2.6|20592_aa|+|29823|30533$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00037|Prodigal:2.6|21036_aa|+|30538|31215$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00038|Prodigal:2.6|21527_aa|+|31230|31937$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00039|Prodigal:2.6|21840_aa|+|31937|32485$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00040|Prodigal:2.6|22830_aa|+|32495|33661$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00041|Prodigal:2.6|23958_aa|+|33634|35169$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00042|Prodigal:2.6|24099_aa|+|35169|35822$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00043|Prodigal:2.6|25233_aa|+|35889|37196$$gi|985000614|gb|CP014225.1|   COG0398-->unknown-->COG0398-->COG2128-->COG4134-->COG4135-->COG4136-->COG2897   S::Uncharacterized membrane protein YdjX, TVP38/TMEM64 family, SNARE-associated domain::Function unknown-->unknown::unknown-->S::Uncharacterized membrane protein YdjX, TVP38/TMEM64 family, SNARE-associated domain::Function unknown-->P::Alkylhydroperoxidase family enzyme, contains CxxC motif::Inorganic ion transport and metabolism-->R::ABC-type uncharacterized transport system YnjBCD, periplasmic component::General function prediction only-->R::ABC-type uncharacterized transport system YnjBCD, permease component::General function prediction only-->R::ABC-type uncharacterized transport system YnjBCD, ATPase component::General function prediction only-->P::3-mercaptopyruvate sulfurtransferase SseA, contains two rhodanese domains::Inorganic ion transport and metabolism
+		gene_id COG_id  annotation
+		CPIBHFJP_00007|Prodigal:2.6|2673_aa|+|3821|3946$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00008|Prodigal:2.6|2862_aa|+|3961|4182$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00009|Prodigal:2.6|3078_aa|+|4218|4484$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00010|Prodigal:2.6|3373_aa|+|4484|4867$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00011|Prodigal:2.6|3449_aa|+|4887|5078$$gi|985000614|gb|CP014225.1|        unknown-->unknown-->unknown-->COG3001-->COG3001 unknown::unknown-->unknown::unknown-->unknown::unknown-->G::Fructosamine-3-kinase::Carbohydrate transport and metabolism-->G::Fructosamine-3-kinase::Carbohydrate transport and metabolism
+		CPIBHFJP_00036|Prodigal:2.6|20592_aa|+|29823|30533$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00037|Prodigal:2.6|21036_aa|+|30538|31215$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00038|Prodigal:2.6|21527_aa|+|31230|31937$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00039|Prodigal:2.6|21840_aa|+|31937|32485$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00040|Prodigal:2.6|22830_aa|+|32495|33661$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00041|Prodigal:2.6|23958_aa|+|33634|35169$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00042|Prodigal:2.6|24099_aa|+|35169|35822$$gi|985000614|gb|CP014225.1|-->CPIBHFJP_00043|Prodigal:2.6|25233_aa|+|35889|37196$$gi|985000614|gb|CP014225.1|   COG0398-->unknown-->COG0398-->COG2128-->COG4134-->COG4135-->COG4136-->COG2897   S::Uncharacterized membrane protein YdjX, TVP38/TMEM64 family, SNARE-associated domain::Function unknown-->unknown::unknown-->S::Uncharacterized membrane protein YdjX, TVP38/TMEM64 family, SNARE-associated domain::Function unknown-->P::Alkylhydroperoxidase family enzyme, contains CxxC motif::Inorganic ion transport and metabolism-->R::ABC-type uncharacterized transport system YnjBCD, periplasmic component::General function prediction only-->R::ABC-type uncharacterized transport system YnjBCD, permease component::General function prediction only-->R::ABC-type uncharacterized transport system YnjBCD, ATPase component::General function prediction only-->P::3-mercaptopyruvate sulfurtransferase SseA, contains two rhodanese domains::Inorganic ion transport and metabolism
 
 
     11. input.fsa.cog_adjacency:
         This file contain two parts: The first part converts operonic adjacency to COG id adjacency and statistic of the COG id adjacency. The second part evaluate the core operon and its closest real operon.
 
-			##############################
-			# COG adjacency
-			##############################
-			geneA geneB cA cB cAB cA+cB-cAB cAB/(cA+cB-cAB)
-			COG3188 COG3539 11 32 7 36 0.194444444444
-			COG2801 COG2963 16 16 11 21 0.52380952381
-			COG1662 COG3677 10 9 8 11 0.727272727273
-			...
+		##############################
+		# COG adjacency
+		##############################
+		geneA geneB cA cB cAB cA+cB-cAB cAB/(cA+cB-cAB)
+		COG3188 COG3539 11 32 7 36 0.194444444444
+		COG2801 COG2963 16 16 11 21 0.52380952381
+		COG1662 COG3677 10 9 8 11 0.727272727273
+		...
 
-			##############################
-			# evalute the core operon
-			##############################
-			predict_operon  real_operon_name        real_operon_cog Precise Recall  F1      predict_annot   real_annot
-			COG0601$$COG1173        sso:SSO3058$$sso:SSO3059        COG0601$$COG1173        1.000000        1.000000        1.000000        ABC-type dipeptide/oligopeptide/nickel transport system, permease component$$ABC-type dipeptide/oligopeptide/nickel transport system, permease component        ABC-type dipeptide/oligopeptide/nickel transport system, permease component$$ABC-type dipeptide/oligopeptide/nickel transport system, permease component
+		##############################
+		# evalute the core operon
+		##############################
+		predict_operon  real_operon_name        real_operon_cog Precise Recall  F1      predict_annot   real_annot
+		COG0601$$COG1173        sso:SSO3058$$sso:SSO3059        COG0601$$COG1173        1.000000        1.000000        1.000000        ABC-type dipeptide/oligopeptide/nickel transport system, permease component$$ABC-type dipeptide/oligopeptide/nickel transport system, permease component        ABC-type dipeptide/oligopeptide/nickel transport system, permease component$$ABC-type dipeptide/oligopeptide/nickel transport system, permease component
 		COG1129$$COG1172        eco:b1513$$eco:b1514$$eco:b1515$$eco:b1516$$eco:b1517$$eco:b1518$$eco:b1519     COG1129$$COG1172$$COG1172$$COG1879$$COG1830$$COG1359$$COG4106   1.000000        0.428571        0.600000        ABC-type sugar transport system, ATPase component$$Ribose/xylose/arabinose/galactoside ABC-type transport system, permease component    ABC-type sugar transport system, ATPase component$$Ribose/xylose/arabinose/galactoside ABC-type transport system, permease component$$Ribose/xylose/arabinose/galactoside ABC-type transport system, permease component$$ABC-type sugar transport system, periplasmic component, contains N-terminal xre family HTH domain$$Fructose-bisphosphate aldolase class Ia, DhnA family$$Quinol monooxygenase YgiN$$Trans-aconitate methyltransferase
-			...
+		...
 
 
 
@@ -135,11 +135,11 @@ POEM will create a directory named read.fasta_output to save the results. The re
     12. input.fsa.core_cog_adjacency:
         The core COG adjacency is the same as the first part of file from step 11. This file is tab delimited.
 
-			geneA   geneB   cA      cB      cAB     cA+cB-cAB       cAB/(cA+cB-cAB)
-			COG1173 COG0601 5       5       5       5       1.0
-			COG1172 COG1129 8       8       6       10      0.6
-			COG2963 COG2801 16      16      11      21      0.52380952381
-			COG1662 COG3677 10      9       8       11      0.727272727273
+		geneA   geneB   cA      cB      cAB     cA+cB-cAB       cAB/(cA+cB-cAB)
+		COG1173 COG0601 5       5       5       5       1.0
+		COG1172 COG1129 8       8       6       10      0.6
+		COG2963 COG2801 16      16      11      21      0.52380952381
+		COG1662 COG3677 10      9       8       11      0.727272727273
 
 
     13. input.fsa.core_network.sif, input.fsa.core_node.tab:
