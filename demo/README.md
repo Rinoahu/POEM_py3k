@@ -33,3 +33,4 @@ Make sure the files input.fsa.core_network.sif and input.fsa.core_node.tab are n
  3. Look at your data: your full network should now look like this 
  ![Visualization of core operons](demo/afg.png)
 *Figure 2: visualization of core operons from demo assembly file in cytoscape*
+You are now ready to use your own data!
