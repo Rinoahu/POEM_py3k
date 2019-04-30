@@ -3,7 +3,7 @@ POEM is a pipeline which can predict operons and core operons from metagenomic g
 ## Requirements
 
 
-This pipeline is available on Linux systems. Make sure that you have the following installed
+This pipeline is available on Linux systems and Windows WSL. Make sure that you have the following installed on linux
 
 1.  [Anaconda](https://www.anaconda.com/ "https://www.anaconda.com/") for Python 3.7
 2.  [conda](https://conda.io/en/latest/ "https://conda.io/en/latest/")
@@ -12,7 +12,7 @@ This pipeline is available on Linux systems. Make sure that you have the followi
 
 ## Linux Installation
 
-Installation is simple if Anaconda and Conda are installed. Type or paste the following commands into your terminal in whichever subfolder you want to keep POEM.
+Installation is simple once Anaconda and Conda are installed. Type or paste the following commands into your terminal in whichever subfolder you want to keep POEM.
 
 ```
 $ git clone https://github.com/Rinoahu/POEM_py3k
@@ -24,9 +24,8 @@ $ bash ./install.sh
 The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
 PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
 
-## Windows Installation
+## Setting Up Windows WSL for Windows users (Windows 10)
 
-Running this pipeline on Windows 10 requires a few more steps.
 1. Install Ubuntu (or preferred * Nix distribution). Ubuntu can be downloaded for free from the windows app store
 2. Open Windows Powershell as administrator and enter the following
 ``` 
@@ -37,8 +36,11 @@ more information on windows subsystem linux can be found at https://docs.microso
 ```
 sudo apt update && sudo apt upgrade
 ```
-4. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). 
-5. Open a new terminal, create a subfolder wherever you want to store POEM, and enter the following commands
+
+## Installing POEM_py3k on Windows WSL
+
+1. Download Anaconda 3.7 *for Linux* (not windows). Run the installer in your Linux distribution (/mnt/c/...). 
+2. Open a new terminal, create a subfolder wherever you want to store POEM, and enter the following commands
 ``` 
 $ git clone https://github.com/Rinoahu/POEM_py3k
 
@@ -46,7 +48,6 @@ $ cd ./POEM_py3k
 
 $ bash ./install.sh
 ```
-
 The installation script calls conda to install all the necessary python packages and software, as well as the COG database. 
 PS: POEM calls either Prodigal or MetaGeneMark for gene predictions. If the users want to use MetaGeneMark, they must install it by themselves, because [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") requires academic users to agree to an license before downloading. After installtation, make sure to add path of binary executable file [gmhmmp]() in [MetaGeneMark](http://exon.gatech.edu/GeneMark/ "http://exon.gatech.edu/GeneMark/") to $PATH environment variable.
 
@@ -63,11 +64,12 @@ $ cd ./example
 $ bash ./runme.sh eco.fasta
 ```
 This should output a network with 5 pairs of genes if you check the .sif file in Cytoscape.
+*note: this is to verify your installation is working correctly only and is not representative of POEMs intended function (this is looking at a single genome rather than metagenomic data, and is identifying duplicated genes). A short demo using actual metagenomic data is included along with a guide in the demo folder*
 
 ## Usage
 POEM is recommended for finding operons in preassembled metagenomic data, but can also accept short or long reads, for which it uses IDBA_UD to assemble
 
-For preassembled fasta files (or genomes)
+For preassembled fasta files 
 ``` 
 $ bash ./bin/run_poem.sh -f file.name -a n -p pro 
 
@@ -97,11 +99,11 @@ use the fq2fa command of IDBA_UD to convert them to a single fasta file. Interle
 ## Flags
 -f: Specifies input file name. File should be a single fasta format file, but file name is not important. 
 
--a: Assembly mode. For preassembled files use n or N, for reads (single end or interleaved paired ends) us y or Y
+-a: Assembly mode. For preassembled files -a n/N, for reads (single end or interleaved paired ends) -a y/Y
 
--p: Gene prediction method. For Prodigal use pro or prodigal, for metagenemark (if installed) use gmk or genemark. to generate genbank files with prokka use pka or prokka
+-p: Gene prediction method. For Prodigal -p pro/prodigal, for metagenemark (if installed) -p gmk/genemark. To generate genbank files with prokka -p pka/prokka
 
--l: Read length: If assembly mode is on, the IDBA_UD will default to short read mode, which can also be specified by using n. for long reads (>600bp) use y
+-l: Read length: If assembly mode is on IDBA_UD will default to short read mode, which can also be specified by -l n. for long reads (>600bp) -l y
 
 ## Output
 
@@ -198,7 +200,7 @@ POEM will create a directory named filename.fasta_output to save the results. Th
     13. input.fsa.core_network.sif, input.fsa.core_node.tab:
         Network, node attribute and edge attribute extracted from step 11 for cytoscape visualization. Figure 1 shows an example to view the core operons by cytoscape.
 
-To visualize the network in Cytoscape import the network from the .sif file. To add the gene prediction annotations, import the input.fsa.core_node.tab file as a table. Change the node labels to function/passthrough mapping under style.
+To visualize the network in Cytoscape import the network from the .sif file. To add the gene prediction annotations, import the input.fsa.core_node.tab file as a table. Change the node labels to function/passthrough mapping under style. Optionally change fill color to 'color' to colorcode by function, and change edge width to 'interaction' to visualize frequency of cooccurance of genes.
 ![Visualization of core operons](example/cyto.jpeg)
 *Figure 1: visualization of core operons in cytoscape*
 
