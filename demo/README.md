@@ -21,6 +21,12 @@ Make sure the files input.fsa.core_network.sif and input.fsa.core_node.tab are n
 
 ## Visualing your network with Cytoscape
 
+*note: if you are running this pipline on Windows WSL you will need to move your files somewhere in your normal file system to allow cytoscape to access them. enter the following*
+```
+cp input.fsa.core_network.sif /mnt/c/...
+cp input.fsa.core_node.tab /mnt/c/...
+```
+*/mnt/c/... is wherever you want to store these files on your C drive*
  1. Importing the files: Open cytoscape, click file>import>Network_from_file and select input.fsa.core_network.sif in afg_output. Next click file>import>table_from_file and select input.fsa.core_node.tab . Change "where to import table data" from "to a network collection" to "to selected networks only" and select input.fsa.core_network.sif  
 
  For the purposes of this demo there is only one network, but later on you may wish to compare multiple networks in the same cytoscape session. You may wish to rename the network files or change their names in cytoscape to avoid confusion & prevent mismatching of tables and networks.
