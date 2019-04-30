@@ -31,6 +31,6 @@ Make sure the files input.fsa.core_network.sif and input.fsa.core_node.tab are n
  	3. Next click 'Edge' at the bottom of the menu. Click 'Width' and change column to 'interaction' and mapping to 'passthrough mapping'. This will change the connections between genes to visually represent the frequency of their connection. 
  	4. Finally, click 'Label' and change column to 'interaction' and mapping to 'passthrough mapping'. This will put the numeric value of the frequency on each connection.
  3. Look at your data: your full network should now look like this 
- ![Visualization of core operons](demo/afg.png)
+ ![Visualization of demo operons](demo/afg.jpeg)
 *Figure 2: visualization of core operons from demo assembly file in cytoscape*
 You are now ready to use your own data!
