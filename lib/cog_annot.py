@@ -103,7 +103,8 @@ for i in f:
     key = tuple(m8[: 2])
     j = m8[1].split('|')[1]
     if True:
-        cgid = ncbi2cog[j]
+        #cgid = ncbi2cog[j]
+        cgid = ncbi2cog.get(j, 'unknown')
         fun, fun_name = cog2fun.get(cgid, ['unknown', 'unknown'])
 
         if fun == fun_name == 'unknown':
