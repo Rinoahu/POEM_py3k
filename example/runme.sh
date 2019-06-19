@@ -2,7 +2,8 @@
 
 rm -rf read* *_output
 
-bunzip2 test.fasta.bz2
+#bunzip2 test.fasta.bz2
+bzcat test.fasta.bz2 > test.fasta
 genome=test.fasta
 
 if [ ! $1 ]
