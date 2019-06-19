@@ -18,4 +18,4 @@ else
 
 fi
 
-
+rm test.fasta
