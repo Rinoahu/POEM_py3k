@@ -61,7 +61,7 @@ the example directory contains a genome fasta file of _E.coli_, run  ```runme.sh
 ```
 $ cd ./example
 
-$ bash ./runme.sh eco.fasta
+$ bash ./runme.sh test.fasta.bz2
 ```
 This should output a network with 5 pairs of genes if you check the .sif file in Cytoscape.
 *note: this is to verify your installation is working correctly only and is not representative of POEMs intended function (this is looking at a single genome rather than metagenomic data, and is identifying duplicated genes). A short demo using actual metagenomic data is included along with a guide in the demo folder*

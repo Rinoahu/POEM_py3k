@@ -79,6 +79,10 @@ G_adj = nx.Graph()
 f = open(adj, 'r')
 for i in f:
     j = i[: -1].split('\t')
+    if len(j) == 11 and (j[-1] == 'True' or j[-1] == 'False'):
+        pass
+    else:
+        continue
     qid, sid, group = j[0], j[5], j[-1]
     if group == 'True':
         G_adj.add_edge(qid, sid)

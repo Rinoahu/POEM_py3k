@@ -16,6 +16,10 @@ def extract_operon(f):
     operon = []
     for i in f:
         j = i[:-1].split('\t')
+        if len(j) == 11 and j[-1] in ['True', 'False']:
+            pass
+        else:
+            continue
         qid, strand, sid, label = j[0], j[2], j[5], j[-1]
         if label == 'False':
             continue
