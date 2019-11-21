@@ -1,9 +1,13 @@
 clean.sh
+
     clean all the output of test data
 
 runme.sh
-    script to run the test data
+
+    script to run the test data.
+
     usage:
+
         1. if you have installed art and want to assembly the reads
             $ bash runme.sh
 
