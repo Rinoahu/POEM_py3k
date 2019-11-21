@@ -56,16 +56,27 @@ if you are using Cytoscape to visualize your networks, install Cytoscape for win
 
 ## Testing the Installation
 
-the example directory contains two genome fasta files, run  ```runme.sh``` to test the pipeline
+The example directory contains two genome fasta files, run  ```runme.sh``` to test the pipeline.
+
+To check if POEM is installed correctly, the users can make a quick and simple test:
 ```
 $ cd ./example
 
-$ bash ./runme.sh ecoli.fasta.bz2 # The ecoli file is E.coli and it takes several minutes
-
-$ bash ./runme.sh full.fasta.bz2  # The full file contains 48 whole genomes of bacteria and it takes several hours.
+$ bash ./runme.sh ecoli.fasta.bz2
 ```
+
 This should output a network with 5 pairs of genes if you check the .sif file in Cytoscape.
 *note: this is to verify your installation is working correctly only and is not representative of POEMs intended function (this is looking at a single genome rather than metagenomic data, and is identifying duplicated genes). A short demo using actual metagenomic data is included along with a guide in the demo folder*
+
+To evaluate the performance of POEM on real data, the users can test it on the file of full.fasta.bz2:
+
+```
+$ cd ./example
+
+$ bash ./runme.sh full.fasta.bz2 
+```
+The full.fasta.bz2 file contains 48 whole genomes of bacteria, and it will take several hours.
+
 
 ## Usage
 POEM is recommended for finding operons in preassembled metagenomic data, but can also accept short or long reads, for which it uses IDBA_UD to assemble
