@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# active poem_py3
+conda activate poem_py3
+
+
 # get the scripts path
 SCRIPT=`realpath -s $0`
 SCRIPTPATH=`dirname $SCRIPT`
@@ -215,4 +219,5 @@ echo ''
 $python $SCRIPTPATH/../lib/cytoscape.py $fasta\.core_cog_adjacency
 
 
+conda deactivate
 

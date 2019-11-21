@@ -3,7 +3,14 @@
 rm -rf read* *_output
 
 #bunzip2 test.fasta.bz2
-bzcat test.fasta.bz2 > test.fasta
+#bzcat test.fasta.bz2 > test.fasta
+
+if [ ! $1 ]
+then
+	bzcat $1 > test.fasta
+else
+	bzcat ecoli.fasta.bz2 > test.fsa
+
 genome=test.fasta
 
 if [ ! $1 ]
