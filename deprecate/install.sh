@@ -7,11 +7,9 @@ SCRIPTPATH=`dirname $SCRIPT`
 # build a new environment
 conda create -y -n poem_py3 python=3
 
-eval "$(conda shell.bash hook)"
 conda activate poem_py3 
 # install third part software and packages:
-conda install -y -c bioconda diamond prokka=1.12 idba cd-hit keras=2.2.4 networkx biopython numpy art 
-
+conda install -y -c bioconda diamond prokka=1.12 idba cd-hit keras=2.2.4 networkx biopython numpy
 conda install -y -c biobuilds perl=5.22
 
 # download the cog2014 database.

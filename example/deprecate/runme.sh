@@ -7,10 +7,9 @@ rm -rf read* *_output
 
 if [ ! $1 ]
 then
-	bzcat ecoli.fasta.bz2 > test.fsa
-else
 	bzcat $1 > test.fasta
-fi
+else
+	bzcat ecoli.fasta.bz2 > test.fsa
 
 genome=test.fasta
 

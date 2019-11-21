@@ -1,7 +1,13 @@
 #!/bin/bash
 
 # active poem_py3
+eval "$(conda shell.bash hook)"
 conda activate poem_py3
+
+python --version
+
+#conda activate poem_py3
+#exit 0;
 
 
 # get the scripts path
@@ -11,8 +17,11 @@ SCRIPTPATH=`dirname $SCRIPT`
 # set the path for the python
 #lpython=/home/xiaoh/Downloads/compiler/intel/intelpython27/bin/python
 #python=pypy
-lpython=python3.7
-python=python3.7
+#lpython=python3.7
+#python=python3.7
+lpython=python
+python=python
+
 
 #######################################
 # parse the args

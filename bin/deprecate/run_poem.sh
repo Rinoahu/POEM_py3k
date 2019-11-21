@@ -1,12 +1,18 @@
 #!/bin/bash
 
+# active poem_py3
+conda activate poem_py3
+
+
 # get the scripts path
 SCRIPT=`realpath -s $0`
 SCRIPTPATH=`dirname $SCRIPT`
 
 # set the path for the python
-lpython=/home/xiaoh/Downloads/compiler/intel/intelpython27/bin/python
-python=pypy
+#lpython=/home/xiaoh/Downloads/compiler/intel/intelpython27/bin/python
+#python=pypy
+lpython=python3.7
+python=python3.7
 
 #######################################
 # parse the args
@@ -24,7 +30,11 @@ do
         shift # past argument
         ;;
         -p|--predict)
-        predict="$2"
+        gpd="$2"
+        shift # past argument
+        ;;
+        -l|--fasta)
+        lr="$2"
         shift # past argument
         ;;
         *)
@@ -40,10 +50,14 @@ if [ ! $fas ]; then
 	echo '#'
 	echo '# usage:'
     echo 'for genome|assembly|contig'
-	echo '$ bash this_script.sh -f genome.fsa -a y -p prokka'
+	echo '$ bash this_script.sh -f genome.fsa -a n -p prodigal'
     echo ''
-    echo 'for short reads'
-	echo '$ bash this_script.sh -f reads.fsa -a n -p prokka'
+    echo 'for short reads (length <= 600)'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l n'
+
+    echo 'for short reads (length > 600)'
+	echo '$ bash this_script.sh -f reads.fsa -a y -p prodigal -l y'
+
 	echo '#'
 	echo '#######################################'
 	echo ''
@@ -60,10 +74,15 @@ mkdir -p $temp
 ########################
 # assembly with IDBA_ud
 ########################
-if [ $asm == "Y" ] || [ $asm == "y" ] 
+if [[ $asm == "Y" ]] || [[ $asm == "y" ]]
 then
     echo "assembly mode"
-    idba_ud -l $fas -o $temp/assembly --pre_correction > $temp/asm.log
+
+    if [[ $lr == "n" ]] || [[ $lr == "N" ]]; then
+        idba_ud -r $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
+    else
+        idba_ud -l $fas -o $temp/assembly --pre_correction --num_threads 8 > $temp/asm.log
+    fi
     # check the header of the fasta
     awk -F" " '{if($1~/^>/){print $1}else{print $0}}' $temp/assembly/contig.fa > $temp/input.fsa
 else
@@ -77,17 +96,42 @@ fasta=$temp/input.fsa
 
 #exit 1
 
-#################################
-# gene prediction by Metagenemark
-#################################
+############################################
+# gene prediction by Metagenemark or prokka
+############################################
 echo '##########################################################################'
-echo 'step 1: Metagenemark to predict gene...'
+echo 'step 1: Gene prediction'
 echo '##########################################################################'
 echo ''
 
-gmhmmp=/home/xiaoh/Downloads/genome/evaluator/quast-3.1/libs/genemark/linux_64/gmhmmp 
-$gmhmmp -A $fasta\_gmk_aa.fsa -p 0 -f G -m $SCRIPTPATH/../config/MetaGenemark/MetaGeneMark_v1.mod $fasta
 
+if [[ $gpd == "gmk" ]] || [[ $gpd == "genemark" ]]; then
+
+    #gmhmmp=/home/xiaoh/Downloads/genome/evaluator/quast-3.1/libs/genemark/linux_64/gmhmmp 
+    gmhmmp=gmhmmp 
+    $gmhmmp -A $fasta\_gmk_aa.fsa -p 0 -f G -m $SCRIPTPATH/../config/MetaGenemark/MetaGeneMark_v1.mod $fasta
+
+
+elif [[ $gpd == "prodigal" ]] || [[ $gpd == "pro" ]]; then
+
+    prodigal -a $fasta\_prod_aa.fsa -p meta -i $fasta -q > /dev/null
+    $python $SCRIPTPATH/../lib/prod2gmk.py $fasta\_prod_aa.fsa > $fasta\_gmk_aa.fsa
+    rm $fasta\_prod_aa.fsa
+    #exit 1;
+
+elif [[ $gpd == "prokka" ]] || [[ $gpd == "pka" ]]; then
+
+    #/usr/bin/perl /home/xiaoh/Downloads/compiler/intel/intelpython27/bin/prokka --quiet --fast --prefix prokka_out --metagenome --force --outdir $fasta\_prokka $fasta
+    #prokka --quiet --fast --prefix prokka_out --metagenome --centre X --compliant --force --outdir $fasta\_prokka $fasta
+    # prokka needs clean contig names:
+    $python $SCRIPTPATH/../lib/clean_header.py $fasta > $fasta\_new.fsa
+    prokka --quiet --fast --prefix prokka_out --metagenome --force --outdir $fasta\_prokka $fasta\_new.fsa
+    #$python $SCRIPTPATH/../lib/pka2gmk.py $fasta $fasta\_prokka/prokka_out.faa $fasta\_prokka/prokka_out.gff > $fasta\_gmk_aa.fsa
+    $python $SCRIPTPATH/../lib/pka2gmk.py $fasta\_new.fsa $fasta\_prokka/prokka_out.faa $fasta\_prokka/prokka_out.gff > $fasta\_gmk_aa.fsa
+
+else
+    exit 1
+fi
 
 
 #########################################
@@ -138,7 +182,10 @@ echo '##########################################################################
 echo ''
 # convert the gene predict to the format the operon predictor need.
 $python $SCRIPTPATH/../lib/to_list.py $fasta\_aa.fsa > $fasta\.locus
+
+echo "$lpython $SCRIPTPATH/../lib/deep_operon.py predict $fasta $fasta\.locus $SCRIPTPATH/../config/Operon_Predictor/model.hdf5 > $fasta\.adjacency"
 $lpython $SCRIPTPATH/../lib/deep_operon.py predict $fasta $fasta\.locus $SCRIPTPATH/../config/Operon_Predictor/model.hdf5 > $fasta\.adjacency
+
 $lpython $SCRIPTPATH/../lib/adj2operon.py $fasta\.adjacency $fasta\.cog > $fasta\.operon
 
 
@@ -172,4 +219,5 @@ echo ''
 $python $SCRIPTPATH/../lib/cytoscape.py $fasta\.core_cog_adjacency
 
 
+conda deactivate
 
