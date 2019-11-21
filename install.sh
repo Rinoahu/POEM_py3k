@@ -5,7 +5,7 @@ SCRIPT=`realpath -s $0`
 SCRIPTPATH=`dirname $SCRIPT`
 
 # build a new environment
-conda create -n poem_py3 python=3
+conda create -y -n poem_py3 python=3
 
 conda activate poem_py3 
 # install third part software and packages:

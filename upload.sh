@@ -13,7 +13,7 @@ git config --global user.name Rinoahu
 git remote rm origin
 
 git add -A .
-git commit -m '1. change test pipeline; 2. use conda enviroment'
+git commit -m 'change install.sh'
 git remote add origin https://github.com/Rinoahu/POEM_py3k
 git pull origin master
 git push origin master
